@@ -141,7 +141,7 @@ const JobDetails = () => {
                 <IoIosArrowForward className="fill-current w-3 h-3 mx-3" />
               </li>
               <li className="flex items-center">
-                <span className="text-gray-700 dark:text-gray-300" aria-current="page">{job?.role}</span>
+                <span className="text-gray-700 dark:text-gray-300" aria-current="page">jobs</span>
               </li>
             </ol>
           </nav>
