@@ -7,6 +7,7 @@ import { Box, Typography, Container, CircularProgress, Alert, Button } from '@mu
 import { DataGrid, GridActionsCellItem } from '@mui/x-data-grid';
 import { Edit, Delete } from '@mui/icons-material';
 import { Dialog, DialogTitle, DialogContent } from '@mui/material';
+import toast, { Toaster } from 'react-hot-toast';
 
 const AdminPanel = () => {
   const [jobs, setJobs] = useState([]);
@@ -64,8 +65,10 @@ const AdminPanel = () => {
       
       setJobs([data[0], ...jobs]);
       setOpenDialog(false);
+      toast.success('Job created successfully!');
     } catch (error) {
       setError(error.message);
+      toast.error(`Error creating job: ${error.message}`);
     }
   };
 
@@ -74,13 +77,21 @@ const AdminPanel = () => {
       const { data, error } = await supabase
         .from('jobs')
         .update(jobData)
-        .eq('id', id);
+        .eq('id', id)
+        .select();
 
       if (error) throw error;
+      
+      if (!data || data.length === 0) {
+        throw new Error('No data returned from update');
+      }
+      
       setJobs(jobs.map(job => job.id === id ? data[0] : job));
       setOpenDialog(false);
+      toast.success('Job updated successfully!');
     } catch (error) {
       setError(error.message);
+      toast.error(`Error updating job: ${error.message}`);
     }
   };
 
@@ -93,8 +104,10 @@ const AdminPanel = () => {
 
       if (error) throw error;
       setJobs(jobs.filter(job => job.id !== id));
+      toast.success('Job deleted successfully!');
     } catch (error) {
       setError(error.message);
+      toast.error(`Error deleting job: ${error.message}`);
     }
   };
 
@@ -133,6 +146,17 @@ const AdminPanel = () => {
       bgcolor="background.default"
       py={4}
     >
+      <Toaster
+        position="top-center"
+        reverseOrder={false}
+        toastOptions={{
+          style: {
+            background: '#363636',
+            color: '#fff',
+          },
+          duration: 3000,
+        }}
+      />
       <Container maxWidth="lg">
         <Box display="flex" justifyContent="space-between" alignItems="center" mb={3}>
           <Typography variant="h3" gutterBottom>

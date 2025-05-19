@@ -46,10 +46,16 @@ const supabaseDataProvider = {
     const { data, error } = await supabase
       .from(resource)
       .update(params.data)
-      .eq('id', params.id);
+      .eq('id', params.id)
+      .select();
 
     if (error) throw new Error(error.message);
-    return { data };
+    
+    if (!data || data.length === 0) {
+      throw new Error('No data returned from update');
+    }
+    
+    return { data: data[0] };
   },
 
   delete: async (resource, params) => {
