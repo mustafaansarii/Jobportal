@@ -52,24 +52,11 @@ const AdminPanel = () => {
   }, []);
 
   const sendTelegramMessage = async (jobData) => {
-    // Function to convert markdown to plain text
-    const markdownToPlainText = (text) => {
-      return text
-        .replace(/#{1,6}\s*/g, '') // Remove headers
-        .replace(/\*\*(.*?)\*\*/g, '$1') // Remove bold
-        .replace(/\*(.*?)\*/g, '$1') // Remove italics
-        .replace(/\[(.*?)\]\(.*?\)/g, '$1') // Remove links
-        .replace(/`{1,3}(.*?)`{1,3}/g, '$1') // Remove code blocks
-        .replace(/\n{2,}/g, '\n') // Reduce multiple newlines
-        .trim();
-    };
-
     const jobUrl = `${window.location.origin}/jobs/${jobData.id}`;
     const message =
       `Role: ${jobData.role}\n` +
       `Company: ${jobData.company}\n` +
       `Location: ${jobData.heading || 'Not specified'}\n\n` +
-      `Description:\n${jobData.description ? markdownToPlainText(jobData.description).slice(0, 500) + '...' : 'No description provided'}\n\n` +
       `Apply Here: ${jobData.applylink}\n\n` +
       `Job Details: ${jobUrl}\n\n`
 
