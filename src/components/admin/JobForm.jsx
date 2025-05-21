@@ -6,9 +6,9 @@ const JobForm = ({ job, onCreate, onUpdate, onCancel }) => {
     role: '',
     company: '',
     company_url: '',
-    description: '',
     heading: '',
-    applylink: ''
+    applylink: '',
+    description: ''
   });
 
   const [errors, setErrors] = useState({});
@@ -27,12 +27,12 @@ const JobForm = ({ job, onCreate, onUpdate, onCancel }) => {
         return value.trim() ? '' : 'Company is required';
       case 'company_url':
         return value.trim() && /^https?:\/\/.+\..+$/.test(value) ? '' : 'Valid URL is required';
-      case 'description':
-        return value.trim() ? '' : 'Description is required';
       case 'heading':
         return value.trim() ? '' : 'Heading is required';
       case 'applylink':
         return value.trim() && /^https?:\/\/.+\..+$/.test(value) ? '' : 'Valid URL is required';
+      case 'description':
+        return value.trim() ? '' : 'Description is required';
       default:
         return '';
     }
@@ -72,13 +72,8 @@ const JobForm = ({ job, onCreate, onUpdate, onCancel }) => {
 
   return (
     <Box
-      bgcolor="background.paper"
-      p={3}
-      borderRadius={2}
-      boxShadow={1}
     >
       <Typography variant="h5" mb={3}>
-        {job ? 'Edit Job' : 'Create New Job'}
       </Typography>
       <form onSubmit={handleSubmit}>
         <Stack spacing={3}>
@@ -113,18 +108,6 @@ const JobForm = ({ job, onCreate, onUpdate, onCancel }) => {
             helperText={errors.company_url}
           />
           <TextField
-            label="Description"
-            name="description"
-            value={formData.description}
-            onChange={handleChange}
-            fullWidth
-            required
-            multiline
-            rows={4}
-            error={!!errors.description}
-            helperText={errors.description}
-          />
-          <TextField
             label="Heading (comma separated)"
             name="heading"
             value={formData.heading}
@@ -143,6 +126,18 @@ const JobForm = ({ job, onCreate, onUpdate, onCancel }) => {
             required
             error={!!errors.applylink}
             helperText={errors.applylink}
+          />
+          <TextField
+            label="Description"
+            name="description"
+            value={formData.description}
+            onChange={handleChange}
+            fullWidth
+            required
+            multiline
+            rows={7}
+            error={!!errors.description}
+            helperText={errors.description}
           />
           <Stack direction="row" spacing={2} justifyContent="flex-end">
             <Button
@@ -165,4 +160,4 @@ const JobForm = ({ job, onCreate, onUpdate, onCancel }) => {
   );
 };
 
-export default JobForm; 
+export default JobForm;
