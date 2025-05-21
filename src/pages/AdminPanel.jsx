@@ -8,6 +8,7 @@ import { DataGrid, GridActionsCellItem } from '@mui/x-data-grid';
 import { Edit, Delete } from '@mui/icons-material';
 import { Dialog, DialogTitle, DialogContent } from '@mui/material';
 import toast, { Toaster } from 'react-hot-toast';
+import config from '../config';
 
 const AdminPanel = () => {
   const [jobs, setJobs] = useState([]);
@@ -50,6 +51,52 @@ const AdminPanel = () => {
     fetchJobs();
   }, []);
 
+  const sendTelegramMessage = async (jobData) => {
+    // Function to convert markdown to plain text
+    const markdownToPlainText = (text) => {
+      return text
+        .replace(/#{1,6}\s*/g, '') // Remove headers
+        .replace(/\*\*(.*?)\*\*/g, '$1') // Remove bold
+        .replace(/\*(.*?)\*/g, '$1') // Remove italics
+        .replace(/\[(.*?)\]\(.*?\)/g, '$1') // Remove links
+        .replace(/`{1,3}(.*?)`{1,3}/g, '$1') // Remove code blocks
+        .replace(/\n{2,}/g, '\n') // Reduce multiple newlines
+        .trim();
+    };
+
+    const jobUrl = `${window.location.origin}/jobs/${jobData.id}`;
+    const message =
+      `Role: ${jobData.role}\n` +
+      `Company: ${jobData.company}\n` +
+      `Location: ${jobData.heading || 'Not specified'}\n\n` +
+      `Description:\n${jobData.description ? markdownToPlainText(jobData.description).slice(0, 500) + '...' : 'No description provided'}\n\n` +
+      `Apply Here: ${jobData.applylink}\n\n` +
+      `Job Details: ${jobUrl}\n\n`
+
+    try {
+      const response = await fetch(`https://api.telegram.org/bot${config.telegramBotToken}/sendMessage`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          chat_id: config.telegramChannelId,
+          text: message,
+          disable_web_page_preview: false
+        }),
+      });
+
+      const responseData = await response.json();
+      
+      if (!response.ok) {
+        throw new Error(`Telegram API Error: ${responseData.description || 'Unknown error'}`);
+      }
+    } catch (error) {
+      console.error('Error sending Telegram message:', error);
+      toast.error('Failed to send Telegram notification');
+    }
+  };
+
   const handleCreate = async (jobData) => {
     try {
       const { data, error } = await supabase
@@ -66,6 +113,8 @@ const AdminPanel = () => {
       setJobs([data[0], ...jobs]);
       setOpenDialog(false);
       toast.success('Job created successfully!');
+
+      await sendTelegramMessage(data[0]);
     } catch (error) {
       setError(error.message);
       toast.error(`Error creating job: ${error.message}`);
