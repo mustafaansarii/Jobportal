@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { FaBars, FaSearch, FaTimes } from 'react-icons/fa';
-import { FaWhatsapp } from 'react-icons/fa';
+import { FaTelegram } from 'react-icons/fa';
 
 const NavBar = ({ onSearch }) => {
   const [menuOpen, setMenuOpen] = useState(false);
@@ -53,9 +53,9 @@ const NavBar = ({ onSearch }) => {
                 >
                   Internships
                 </button>
-                <a href="https://chat.whatsapp.com/LNWINzQ0Sr46PW88xdHmHc" className="text-gray-600 hover:bg-gray-200 dark:hover:bg-gray-700 px-3 py-2 rounded-md text-sm font-medium dark:text-white flex items-center">
+                <a href="https://t.me/careerhub_job" className="text-gray-600 hover:bg-gray-200 dark:hover:bg-gray-700 px-3 py-2 rounded-md text-sm font-medium dark:text-white flex items-center">
                   Job Alerts
-                  <FaWhatsapp className="ml-1 w-4 h-4" />
+                  <FaTelegram className="ml-1 w-4 h-4" />
                 </a>
                 <form onSubmit={handleSearch} className="flex items-center">
                   <div className="relative">
@@ -130,9 +130,9 @@ const NavBar = ({ onSearch }) => {
             >
               Internships
             </button>
-            <a href="https://chat.whatsapp.com/LNWINzQ0Sr46PW88xdHmHc" className="text-gray-600 hover:bg-gray-200 block px-3 py-2 rounded-md text-base font-medium dark:text-white flex items-center">
+            <a href="https://t.me/careerhub_job" className="text-gray-600 hover:bg-gray-200 block px-3 py-2 rounded-md text-base font-medium dark:text-white flex items-center">
               Job Alerts
-              <FaWhatsapp className="ml-1 w-4 h-4" />
+              <FaTelegram className="ml-1 w-4 h-4" />
             </a>
           </div>
         </div>

@@ -94,8 +94,7 @@ const AllJobs = () => {
     const filtered = jobs.filter(job =>
       job.role.toLowerCase().includes(lowerCaseQuery) ||
       job.company.toLowerCase().includes(lowerCaseQuery) ||
-      job.description.toLowerCase().includes(lowerCaseQuery) ||
-      job.desc.toLowerCase().includes(lowerCaseQuery)
+      job.description.toLowerCase().includes(lowerCaseQuery)
     );
     setFilteredJobs(filtered);
   };
