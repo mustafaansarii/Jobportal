@@ -163,17 +163,19 @@ const AllJobs = () => {
                             <div className="flex items-start w-full sm:w-auto">
                               <div className="flex flex-row items-start">
                                 {job.company_url && (
-                                  <div className="mr-5 h-9 w-11 rounded-lg flex items-center justify-center bg-gray-100 dark:bg-gray-700">
-                                    <img
-                                      src={`https://logo.clearbit.com/${new URL(job.company_url).hostname}`}
-                                      alt="Company Logo"
-                                      className="h-full w-full rounded-lg"
-                                      onError={(e) => {
-                                        e.target.style.display = 'none';
-                                        e.target.parentElement.innerHTML = '<FiBriefcase className="h-5 w-5 text-gray-500 dark:text-gray-400" />';
-                                      }}
-                                    />
-                                  </div>
+                                  <a href={job.company_url} target="_blank" rel="noopener noreferrer">
+                                    <div className="h-10 w-10 rounded mr-4 flex items-center justify-center bg-gray-100 dark:bg-gray-700">
+                                      <img
+                                        src={`https://logo.clearbit.com/${new URL(job.company_url).hostname}`}
+                                        alt="Company Logo"
+                                        className="h-full w-full rounded object-contain hover:opacity-75 transition-opacity duration-200"
+                                        onError={(e) => {
+                                          e.target.style.display = 'none';
+                                          e.target.parentElement.innerHTML = '<FiBriefcase className="h-6 w-6 text-gray-500 dark:text-gray-400" />';
+                                        }}
+                                      />
+                                    </div>
+                                  </a>
                                 )}
                                 <div className="flex flex-col w-full">
                                   <div className="flex sm:hidden flex-col w-full">
