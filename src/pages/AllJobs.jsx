@@ -208,7 +208,7 @@ const AllJobs = () => {
                               </div>
                             </div>
                           </div>
-                          <div className="mt-3 md:mt-0">
+                          <div className="md:mt-0">
                             <div className="text-sm text-gray-500 dark:text-gray-400 flex flex-wrap">
                               {job.heading ? job.heading.split(',').map(item => (
                                 <span key={item} className="bg-gray-100 dark:bg-gray-700 px-3 py-1.5 rounded-full mr-2 text-sm mb-1">
@@ -217,7 +217,7 @@ const AllJobs = () => {
                               )) : ''}
                             </div>
                             </div>
-                          <div className="text-gray-700 dark:text-gray-400 mt-3 prose max-h-[500px] overflow-hidden">
+                          <div className="text-gray-700 dark:text-gray-400 prose max-h-[500px] overflow-hidden -mt-5">
                             <ReactMarkdown
                               components={{
                                 p: ({ node, ...props }) => <p className="mb-4" {...props} />,

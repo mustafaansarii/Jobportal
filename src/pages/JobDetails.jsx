@@ -221,7 +221,7 @@ const JobDetails = () => {
                 </div>
 
                 {/* Job Description */}
-                <div className="prose dark:prose-invert text-left text-gray-700 dark:text-gray-300 max-w-full">
+                <div className="prose dark:prose-invert text-left text-gray-700 dark:text-gray-300 max-w-full -mt-5">
                   <ReactMarkdown
                     components={{
                       p: ({ node, ...props }) => <p className="mb-4 text-gray-700 dark:text-gray-300" {...props} />,
